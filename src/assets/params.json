@@ -1,0 +1,102 @@
+{
+  "g": {
+    "value": 9.81,
+    "unit": "m/s^2",
+    "name": "Gravity"
+  },
+  "m": {
+    "value": 8400,
+    "unit": "kg",
+    "name": "Маss"
+  },
+  "c": {
+    "value": 0.52,
+    "unit": "m",
+    "name": "Wingspan"
+  },
+  "S": {
+    "value": 34,
+    "unit": "m^2",
+    "name": "Wing area"
+  },
+  "rg": {
+    "value": 2.65,
+    "unit": "m",
+    "name": "Radius of gyration"
+  },
+  "lref": {
+    "value": 5.24,
+    "unit": "m",
+    "name": "Reference length"
+  },
+  "lt": {
+    "value": 7.86,
+    "unit": "m",
+    "name": "Total length (3/2)*lref"
+  },
+  "alt": {
+    "value": 18100,
+    "unit": "ft",
+    "name": "Altitude"
+  },
+  "alt_m": {
+    "value": 5516.88,
+    "unit": "m",
+    "name": "Altitude"
+  },
+  "Mach": {
+    "value": 0.78,
+    "unit": "",
+    "name": "Mach number"
+  },
+  "gamma": {
+    "value": 1.4,
+    "unit": "",
+    "name": "Heat capacity ratio"
+  },
+  "Cx0": {
+    "value": 0.015,
+    "unit": "",
+    "name": "Drag coefficient"
+  },
+  "Cz_alpha": {
+    "value": 2.65,
+    "unit": "",
+    "name": "Lift coefficient"
+  },
+  "Cz_delta_m": {
+    "value": 1.1,
+    "unit": "",
+    "name": "Lift coefficient"
+  },
+  "delta_m0": {
+    "value": 0.022,
+    "unit": "",
+    "name": "Equilibrium elevator deflection"
+  },
+  "alpha_0": {
+    "value": 0.02,
+    "unit": "",
+    "name": "Zero lift angle of attack"
+  },
+  "f": {
+    "value": 0.54,
+    "unit": "m",
+    "name": "Aerodynamic center of body and wing"
+  },
+  "f_delta": {
+    "value": 0.78,
+    "unit": "m",
+    "name": "Aerodynamic center of fins"
+  },
+  "k": {
+    "value": 0.22,
+    "unit": "",
+    "name": "Polar coefficient"
+  },
+  "Cm_q": {
+    "value": -0.675,
+    "unit": "",
+    "name": "Damping moment coefficient"
+  }
+}
