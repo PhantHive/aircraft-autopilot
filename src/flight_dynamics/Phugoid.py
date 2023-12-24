@@ -53,7 +53,6 @@ class Phugoid:
 
         iron = IronMan()
 
-        plt.figure(1)
         plt.title(r'Phugoid approximation $V/δm$ et $γ/δm$')
         plt.xlabel('Time (s)')
         plt.ylabel(r'$V$ (m/s) & $γ$ (rad)')

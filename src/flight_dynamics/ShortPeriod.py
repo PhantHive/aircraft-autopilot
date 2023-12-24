@@ -53,7 +53,6 @@ class ShortPeriod:
 
         iron = IronMan()
 
-        plt.figure(1)
         plt.title(r'Short Period approximation $α/δm$ et $q/δm$')
         plt.xlabel('Time (s)')
         plt.ylabel(r'$α$ (rad) & $q$ (rad/s)')

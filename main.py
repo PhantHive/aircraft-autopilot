@@ -27,6 +27,7 @@ if __name__ == '__main__':
     short_period = ShortPeriod(A, B)
     print(short_period.__str__())
     short_period.plot()
+    TqDm_tf = short_period.compute_tf_q()
     # --------------------------------------------------------
 
     # ------------------- Phugoid Response -------------------
@@ -42,6 +43,7 @@ if __name__ == '__main__':
         Aq, Bq, Cq, Dq, eigen_q, damping_q, freq_q, closed_tf_ss_q = auto_pilot.compute_q_feedback()
 
     auto_pilot.plot_q_feedback(closed_tf_ss_q)
+    auto_pilot.plot_q_open_closed_loop(TqDm_tf)
 
     # ------------------- Generate report -------------------
     write = GenerateReport(Aq, Bq, Cq, Dq, eigen_q, damping_q, freq_q)
