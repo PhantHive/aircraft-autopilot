@@ -525,8 +525,8 @@ def sisotool(sys,kmin=0.0001,kmax=40.0,kdefault=1.0,FONT_SIZE=15,xispec=0.7):
 
 if __name__ == '__main__': 
      # syst=control.tf([-13.76,-8.466],[1.,1.569,13.86])
-     syst=control.tf([-0.0609, -0.0675, 16.8403], [  1.    ,  14.0703, 101.011 ,   0.    ])
-     #syst=control.tf([  -476.4675,   -528.5191, 131793.0851], [  1.    ,  12.9454,  99.7632, 311.14  ,  -0.    ])
+     # syst=control.tf([-0.0609, -0.0675, 16.8403], [  1.    ,  14.0703, 101.011 ,   0.    ])
+     syst=control.tf([  -476.4675,   -528.5191, 131793.0851], [  1.    ,  12.9454,  99.7632, 311.14  ,  -0.    ])
      
      (roots,gains) =control.rlocus(syst,plot=False)
      #(roots,gains) =control.rlocus(syst,plot=True,print_gains=True)

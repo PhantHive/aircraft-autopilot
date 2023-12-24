@@ -37,6 +37,9 @@ class AircraftStability(Params):
         self.Cx_eq = None
         self.Cx_delta_m = None
 
+    def get_params(self):
+        return self.p
+
     def compute_equilibrium(self):
         count = 0
         while abs(self.alpha_eq - self.alpha_eq_prev) >= self.eps:

@@ -52,8 +52,14 @@ if __name__ == '__main__':
         warnings.filterwarnings("ignore", category=RuntimeWarning)
         Ag, Bg, Cg, Dg, eigen_g, damping_g, freq_g, closed_tf_ss_g = auto_pilot.compute_gamma_feedback(Aq, Bq, Cq, Dq)
 
-    # auto_pilot.plot_gamma_feedback(closed_tf_ss_g)
-    # auto_pilot.plot_gamma_open_closed_loop(TqDm_tf)
+    auto_pilot.plot_gamma_feedback(closed_tf_ss_g)
+
+    # z feedback
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=RuntimeWarning)
+        Az, Bz, Cz, Dz, eigen_z, damping_z, freq_z, closed_tf_ss_z = auto_pilot.compute_z_feedback(Ag, Bg, Cg, Dg)
+
+    auto_pilot.plot_z_feedback(closed_tf_ss_z)
 
     # ------------------- Generate report -------------------
     write = GenerateReport(Aq, Bq, Cq, Dq, eigen_q, damping_q, freq_q)
@@ -61,7 +67,13 @@ if __name__ == '__main__':
 
     write = GenerateReport(Ag, Bg, Cg, Dg, eigen_g, damping_g, freq_g)
     write.write("gamma-feedback")
+
+    write = GenerateReport(Az, Bz, Cz, Dz, eigen_z, damping_z, freq_z)
+    write.write("z-feedback")
     # --------------------------------------------------------
+
+    getParams = aircraft.get_params()
+    auto_pilot.compute_gamma_max(Ag, Bg, Cg, Dg, alpha_eq, getParams['alpha_0']['value'])
 
 
 
