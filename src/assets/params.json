@@ -52,7 +52,17 @@
   "gamma": {
     "value": 1.4,
     "unit": "",
-    "name": "Heat capacity ratio"
+    "name": "Adiabatic exponent"
+  },
+  "R": {
+    "value": 287,
+    "unit": "J/(kg*K)",
+    "name": "Gas constant"
+  },
+  "T0": {
+    "value": 252.29,
+    "unit": "K",
+    "name": "Temperature at 18100ft calculated  with omni calculator"
   },
   "Cx0": {
     "value": 0.015,
