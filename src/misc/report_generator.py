@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
@@ -15,8 +17,9 @@ class GenerateReport:
         self.damping = np.array(damping)
         self.sys = sys
 
-    def write(self):
-        doc = SimpleDocTemplate("aircraft-report.pdf", pagesize=letter)
+    def write(self, file_name):
+        path = os.getcwd()
+        doc = SimpleDocTemplate(f"{path}/src/misc/report/{file_name}.pdf", pagesize=letter)
         elements = []
         styles = getSampleStyleSheet()
 

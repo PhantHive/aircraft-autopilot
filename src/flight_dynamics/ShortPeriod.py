@@ -95,7 +95,7 @@ class ShortPeriod:
         # get current dir absolute path
         path = os.path.abspath(os.getcwd())
         try:
-            savefig(f"{path}\\src\\pdf\\shortperiod.png")
+            savefig(f"{path}\\src\\misc\\plots\\shortperiod.png")
         except:
             print("Error while saving the figure")
         plt.show()

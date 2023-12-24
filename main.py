@@ -1,11 +1,9 @@
-
 import warnings
 from src.aircraft.aircraft import AircraftStability, StateSpaceModel
 from src.flight_dynamics.Phugoid import Phugoid
 from src.flight_dynamics.ShortPeriod import ShortPeriod
-
-
-
+from src.autopilot.autopilot import AutoPilot
+from src.misc.report_generator import GenerateReport
 
 if __name__ == '__main__':
     aircraft = AircraftStability()
@@ -21,8 +19,8 @@ if __name__ == '__main__':
 
 
     # ------------------- Generate report -------------------
-    # write = GenerateReport(A, B, C, D, eigen_values, damping, sys)
-    # write.write()
+    write = GenerateReport(A, B, C, D, eigen_values, damping, sys)
+    write.write("aircraft-report")
     # --------------------------------------------------------
 
     # ------------------- Short Period Response -------------------
@@ -36,5 +34,18 @@ if __name__ == '__main__':
     print(phugoid.__str__())
     phugoid.plot()
     # --------------------------------------------------------
+
+    # ------------------- Auto Pilot -------------------
+    auto_pilot = AutoPilot(A, B)
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=RuntimeWarning)
+        Aq, Bq, Cq, Dq, eigen_q, damping_q, freq_q, closed_tf_ss_q = auto_pilot.compute_q_feedback()
+
+    auto_pilot.plot_q_feedback(closed_tf_ss_q)
+
+    # ------------------- Generate report -------------------
+    write = GenerateReport(Aq, Bq, Cq, Dq, eigen_q, damping_q, freq_q)
+    write.write("q-feedback")
+
 
 

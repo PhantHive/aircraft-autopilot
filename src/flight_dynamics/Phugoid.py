@@ -95,7 +95,7 @@ class Phugoid:
 
         path = os.path.abspath(os.getcwd())
         try:
-            savefig(f"{path}\\src\\pdf\\phugoid.png")
+            savefig(f"{path}\\src\\misc\\plots\\phugoid.png")
         except:
             print("Error while saving the figure")
 
