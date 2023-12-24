@@ -3,6 +3,8 @@ import warnings
 from sisopy31 import *
 import math
 
+from src.flight_dynamics.ShortPeriod import ShortPeriod
+
 
 class Params:
     with open('src/assets/params.json') as f:
@@ -151,3 +153,10 @@ if __name__ == '__main__':
     # write = GenerateReport(A, B, C, D, eigen_values, damping, sys)
     # write.write()
     # --------------------------------------------------------
+
+    # ------------------- Short Period Response -------------------
+    short_period = ShortPeriod(A, B)
+    print(short_period.__str__())
+    short_period.plot()
+    # --------------------------------------------------------
+
