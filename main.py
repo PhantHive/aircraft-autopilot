@@ -38,6 +38,8 @@ if __name__ == '__main__':
 
     # ------------------- Auto Pilot -------------------
     auto_pilot = AutoPilot(A, B)
+
+    # q feedback
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=RuntimeWarning)
         Aq, Bq, Cq, Dq, eigen_q, damping_q, freq_q, closed_tf_ss_q = auto_pilot.compute_q_feedback()
@@ -45,9 +47,22 @@ if __name__ == '__main__':
     auto_pilot.plot_q_feedback(closed_tf_ss_q)
     auto_pilot.plot_q_open_closed_loop(TqDm_tf)
 
+    # 𝛾 feedback
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=RuntimeWarning)
+        Ag, Bg, Cg, Dg, eigen_g, damping_g, freq_g, closed_tf_ss_g = auto_pilot.compute_gamma_feedback(Aq, Bq, Cq, Dq)
+
+    # auto_pilot.plot_gamma_feedback(closed_tf_ss_g)
+    # auto_pilot.plot_gamma_open_closed_loop(TqDm_tf)
+
     # ------------------- Generate report -------------------
     write = GenerateReport(Aq, Bq, Cq, Dq, eigen_q, damping_q, freq_q)
     write.write("q-feedback")
+
+    write = GenerateReport(Ag, Bg, Cg, Dg, eigen_g, damping_g, freq_g)
+    write.write("gamma-feedback")
+    # --------------------------------------------------------
+
 
 
 

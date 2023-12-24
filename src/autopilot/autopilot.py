@@ -12,6 +12,7 @@ class AutoPilot:
         self.B = B[1:]
         self.D = np.zeros((1, 1))
         self.Kr = -0.33057  # using sisopy31
+        self.Kgamma = 14.30915
         self.iron = IronMan()
 
     def compute_q_feedback(self):
@@ -30,8 +31,18 @@ class AutoPilot:
 
         return Aq, Bq, Cq, Dq, eigen, damp, frequency, closed_tf_ss_q
 
-    def compute_gamma_feedback(self):
-        pass
+    def compute_gamma_feedback(self, Aq, Bq, Cq, Dq):
+        Cgamma = np.array([[1], [0], [0], [0], [0]]).T
+        Agamma = Aq - self.Kgamma * Bq @ Cgamma
+        Bgamma = self.Kgamma * Bq
+        Dgamma = self.Kgamma * Dq
+        closed_state_space = control.ss(Agamma, Bgamma, Cgamma, Dgamma)
+        closed_tf_ss_gamma = control.tf(closed_state_space)
+        print("\n------------------- 𝛾 feedback loop ------------------- \n")
+        print(f"State space representation: {closed_state_space}")
+        print(f"Transfer function: {closed_tf_ss_gamma}")
+        eigen, damp, frequency = control.matlab.damp(closed_state_space)
+        return Agamma, Bgamma, Cgamma, Dgamma, eigen, damp, frequency, closed_tf_ss_gamma
 
     def plot_q_feedback(self, closed_tf_ss_q):
 
