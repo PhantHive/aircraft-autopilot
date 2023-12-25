@@ -73,6 +73,8 @@ This project was made during the IPSA course **Aircraft Flight Control** by:
 With the sisotool provided by:
 - Jean-Pierre Nouaille
 
+This project uses custom styles for plots from:
+- https://github.com/PhantHive/super-curves
 
 
 
