@@ -74,6 +74,7 @@ if __name__ == '__main__':
 
     getParams = aircraft.get_params()
     auto_pilot.compute_gamma_max(Ag, Bg, Cg, Dg, alpha_eq, getParams['alpha_0']['value'])
+    auto_pilot.compute_alpha_max(getParams, alpha_eq)
 
 
 

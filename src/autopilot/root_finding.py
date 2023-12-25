@@ -7,6 +7,7 @@ class RootFinding:
     def __init__(self, SS_sat, alpha_max):
         self.SS_sat = SS_sat
         self.alpha_max = alpha_max
+        self.nz = 3.1
 
     def saturation(self, gamma):
         alpha, t = control.matlab.step(gamma * self.SS_sat)
@@ -18,6 +19,11 @@ class RootFinding:
         return df
 
     def newton(self, f, df):
+        '''
+        :param f: saturation
+        :param df: derivative of saturation
+        :return: gamma_max, number of iterations
+        '''
         count = 0
         x0 = 0
         x1 = np.pi / 6
@@ -27,3 +33,6 @@ class RootFinding:
             x1 = x0 - f(x0) / df(f, x0, eps)
             count += 1
         return x1, count
+
+
+

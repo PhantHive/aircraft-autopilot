@@ -20,8 +20,32 @@ class AutoPilot:
         self.arrow_width = 0.01
         self.arrow_head_length = 4
         self.text_offset = 0.25
+        self.delta_nz = 3.1 # from practical work pdf (we want maximum transverse load factor)
+
+    def compute_alpha_feedback(self):
+        '''
+        follow this instruction:
+        Use the damp command and give the poles of the system, their
+        damping ratio and their pulsation.
+        Plot the step response, with α as an output.
+        Add an α feedback loop and tune kα in order to have a pulsation
+        of 9 ras/s.
+        Give the gain kα
+        Give the close loop state space representation of the system,
+        and choose the observation matrix in order to have q as an
+        output.
+        Give the closed loop poles, their damping ratio and their proper
+        pulsation.
+        '''
+        C_alpha = np.array([[0], [1], [0], [0], [0]]).T
+
+
 
     def compute_q_feedback(self):
+        '''
+        Compute the q feedback loop
+        :return: state space representation, transfer function, eigenvalues, damping ratio, frequency
+        '''
         Cq = np.array([[0], [0], [1], [0], [0]]).T
 
         Aq = self.A - self.Kr * self.B @ Cq
@@ -38,6 +62,11 @@ class AutoPilot:
         return Aq, Bq, Cq, Dq, eigen, damp, frequency, closed_tf_ss_q
 
     def compute_gamma_feedback(self, Aq, Bq, Cq, Dq):
+        '''
+        Compute the gamma feedback loop
+        :param Aq, Bq, Cq, Dq: state space representation of the q feedback loop
+        :return: state space representation, transfer function, eigenvalues, damping ratio, frequency
+        '''
         Cgamma = np.array([[1], [0], [0], [0], [0]]).T
         Agamma = Aq - self.Kgamma * Bq @ Cgamma
         Bgamma = self.Kgamma * Bq
@@ -51,6 +80,11 @@ class AutoPilot:
         return Agamma, Bgamma, Cgamma, Dgamma, eigen, damp, frequency, closed_tf_ss_gamma
 
     def compute_z_feedback(self, Agamma, Bgamma, Cgamma, Dgamma):
+        '''
+        Compute the z feedback loop
+        :param Agamma, Bgamma, Cgamma, Dgamma: state space representation of the gamma feedback loop
+        :return: state space representation, transfer function, eigenvalues, damping ratio, frequency
+        '''
         Cz = np.array([[0], [0], [0], [0], [1]]).T
         Az = Agamma - self.Kz * Bgamma @ Cz
         Bz = self.Kz * Bgamma
@@ -64,17 +98,35 @@ class AutoPilot:
         return Az, Bz, Cz, Dz, eigen, damp, frequency, closed_tf_ss_z
 
     def compute_gamma_max(self, Agamma, Bgamma, Cgamma, Dgamma, alpha_eq, alpha0):
+        '''
+        Compute the maximum angle of attack
+        :param Agamma, Bgamma, Cgamma, Dgamma: state space representation of the gamma feedback loop
+        :param alpha_eq: Equilibrium angle of attack
+        :param alpha0: Zero lift angle of attack
+        :return: 𝛾_max (rad) and number of iterations
+        '''
         SS_sat = control.ss(Agamma, Bgamma, Cgamma, Dgamma)
         tf_ssat = control.tf(SS_sat)
 
-        delta_nz = 3.1 # from practical work pdf (we want maximum transverse load factor)
-        alpha_max = alpha_eq + (alpha_eq - alpha0) * delta_nz
+        alpha_max = alpha_eq + (alpha_eq - alpha0) * self.delta_nz
         print("\n------------------- 𝛾_max computing ------------------- \n")
         print("State space representation y_csat 𝛼: ", SS_sat)
         print("Transfer function: ", tf_ssat)
         ymax_finder = RootFinding(SS_sat, alpha_max)
         ymax = ymax_finder.newton(ymax_finder.saturation, ymax_finder.derivative)
         print(f"We found 𝛾_max = {ymax[0]} rad with {ymax[1]} iterations")
+
+    def compute_alpha_max(self, params, alpha_eq):
+        '''
+        :params: aircraft parameters
+        :alpha_eq: equilibrium angle of attack
+        :return: alpha_max
+        '''
+
+        alpha_max = alpha_eq + (alpha_eq - params['alpha_0']['value']) * self.delta_nz
+        print("\n------------------- alpha_max computing ------------------- \n")
+        print("alpha_max = ", alpha_max, " rad")
+        return alpha_max
 
     def plot_q_feedback(self, closed_tf_ss_q):
         Yqcl, Tqcl = control.matlab.step(closed_tf_ss_q, np.arange(0, 5, 0.01))
