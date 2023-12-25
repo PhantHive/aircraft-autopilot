@@ -23,21 +23,10 @@ class AutoPilot:
         self.delta_nz = 3.1 # from practical work pdf (we want maximum transverse load factor)
 
     def compute_alpha_feedback(self):
-        '''
-        follow this instruction:
-        Use the damp command and give the poles of the system, their
-        damping ratio and their pulsation.
-        Plot the step response, with α as an output.
-        Add an α feedback loop and tune kα in order to have a pulsation
-        of 9 ras/s.
-        Give the gain kα
-        Give the close loop state space representation of the system,
-        and choose the observation matrix in order to have q as an
-        output.
-        Give the closed loop poles, their damping ratio and their proper
-        pulsation.
-        '''
         C_alpha = np.array([[0], [1], [0], [0], [0]]).T
+
+        # compute Kalpha to have a pulsation of 9 rad/s
+        pass
 
 
 
@@ -188,7 +177,7 @@ class AutoPilot:
         plt.show()
 
     def plot_gamma_feedback(self, closed_tf_ss_gamma):
-        Ygamma, Tgamma = control.matlab.step(closed_tf_ss_gamma, np.arange(0, 5, 0.01))
+        Ygamma, Tgamma = control.matlab.step(closed_tf_ss_gamma, np.arange(0, 10, 0.01))
         self.iron.neon_curve([Tgamma], [Ygamma])
         plt.plot([0, Tgamma[-1]], [Ygamma[-1], Ygamma[-1]], '--', lw=1, color='#C56D1C')
         plt.plot([0, Tgamma[-1]], [1.05 * Ygamma[-1], 1.05 * Ygamma[-1]], '--', lw=1, color='#C56D1C')
@@ -214,7 +203,7 @@ class AutoPilot:
         plt.show()
 
     def plot_z_feedback(self, closed_tf_ss_z):
-        Yzcl, Tzcl = control.matlab.step(closed_tf_ss_z, np.arange(0, 10, 0.01))
+        Yzcl, Tzcl = control.matlab.step(closed_tf_ss_z, np.arange(0, 10, 0.1))
         self.iron.neon_curve([Tzcl], [Yzcl])
         plt.plot([0, Tzcl[-1]], [Yzcl[-1], Yzcl[-1]], '--', lw=1, color='#C56D1C')
         plt.plot([0, Tzcl[-1]], [1.05 * Yzcl[-1], 1.05 * Yzcl[-1]], '--', lw=1, color='#C56D1C')
